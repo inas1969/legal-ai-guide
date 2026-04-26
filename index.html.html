@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>الدليل الإرشادي | AI Hallucinations & Legal Integrity</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C5A059;--gold-dark:#9E7A38;--gold-light:#F0D99A;
+  --navy:#0A1E3C;--navy-mid:#1A3058;--navy-light:#2A4070;
+  --ink:#0F1B2D;--muted:#4A5B6E;--border:#E2E8F0;
+  --bg:#F7F9FC;--white:#FFFFFF;
+  --red:#C0392B;--green:#1D6A46;
+  --shadow:0 2px 16px rgba(10,30,60,0.08);
+  --radius:16px;--radius-sm:10px;--radius-lg:24px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'IBM Plex Sans Arabic','IBM Plex Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:16px}
+body[dir="ltr"]{text-align:left;font-family:'IBM Plex Sans','IBM Plex Sans Arabic',sans-serif}
+body[dir="rtl"]{text-align:right}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+
+/* ─── TOP BAR ─── */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 32px;
+  background:rgba(10,30,60,0.97);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(197,160,89,0.2);
+}
+.topbar-logo{color:var(--gold);font-weight:700;font-size:15px;letter-spacing:0.02em;display:flex;align-items:center;gap:8px}
+.topbar-logo span{color:#fff;font-weight:300}
+.lang-wrap{display:flex;gap:6px}
+.lang-btn{
+  background:none;border:1px solid rgba(197,160,89,0.4);
+  padding:5px 14px;border-radius:40px;font-size:13px;font-weight:600;
+  cursor:pointer;font-family:inherit;color:#ccc;transition:.2s;
+}
+.lang-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.lang-btn:hover:not(.active){border-color:var(--gold);color:var(--gold)}
+
+/* ─── HERO ─── */
+.hero{
+  background:linear-gradient(160deg,#071428 0%,#0A1E3C 55%,#0e2748 100%);
+  color:#fff;padding:100px 0 80px;overflow:hidden;position:relative;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 60% at 80% 40%,rgba(197,160,89,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-grid{display:grid;grid-template-columns:1fr 380px;gap:64px;align-items:center}
+body[dir="ltr"] .hero-grid{grid-template-columns:1fr 380px}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(197,160,89,0.12);border:1px solid rgba(197,160,89,0.3);
+  padding:6px 16px;border-radius:40px;font-size:13px;color:var(--gold-light);
+  margin-bottom:24px;font-weight:500;
+}
+.hero h1{font-size:clamp(28px,4vw,46px);font-weight:700;line-height:1.2;margin-bottom:20px;letter-spacing:-0.02em}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero-sub{font-size:17px;opacity:0.8;max-width:580px;margin-bottom:36px;line-height:1.7;font-weight:300}
+.hero-cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.btn-primary{
+  background:var(--gold);border:none;padding:14px 30px;
+  border-radius:40px;font-weight:700;font-size:15px;color:var(--navy);
+  cursor:pointer;transition:.2s;font-family:inherit;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{background:var(--gold-dark);transform:translateY(-1px)}
+.btn-outline{
+  background:none;border:1px solid rgba(255,255,255,0.25);padding:14px 28px;
+  border-radius:40px;font-size:15px;color:#fff;font-family:inherit;cursor:pointer;transition:.2s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.stats-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+.stat-badge{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
+  padding:8px 18px;border-radius:40px;font-size:13px;font-weight:500;color:#dde5f0;
+}
+.stat-badge strong{color:var(--gold);font-weight:700}
+
+/* Hero visual card */
+.hero-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(197,160,89,0.2);
+  border-radius:var(--radius-lg);padding:28px;backdrop-filter:blur(8px);
+}
+.hero-card-title{font-size:13px;color:var(--gold);font-weight:600;margin-bottom:20px;text-transform:uppercase;letter-spacing:0.08em}
+.mini-case{padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.07)}
+.mini-case:last-child{border-bottom:none;padding-bottom:0}
+.mini-case-name{font-size:14px;font-weight:600;color:#e2eaf6;margin-bottom:4px}
+.mini-case-info{font-size:13px;color:rgba(255,255,255,0.5)}
+.mini-case-penalty{font-size:13px;color:#F87171;font-weight:600;margin-top:4px}
+
+/* ─── TRUST BAR ─── */
+.trust-bar{background:var(--white);padding:24px 0;border-bottom:1px solid var(--border)}
+.trust-inner{display:flex;align-items:center;gap:48px;flex-wrap:wrap}
+.trust-label{font-size:13px;color:var(--muted);font-weight:600;white-space:nowrap}
+.trust-logos{display:flex;flex-wrap:wrap;gap:24px;align-items:center}
+.trust-logo{font-size:13px;color:var(--muted);font-weight:500;padding:6px 16px;background:var(--bg);border:1px solid var(--border);border-radius:40px}
+
+/* ─── CONTAINER ─── */
+.container{max-width:1160px;margin:0 auto;padding:0 28px}
+.section{padding:80px 0}
+.section-header{margin-bottom:52px}
+.section-tag{display:inline-block;font-size:12px;font-weight:700;color:var(--gold-dark);background:#FEF3D6;padding:5px 14px;border-radius:40px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px}
+.section-title{font-size:clamp(26px,3.5vw,36px);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:16px}
+.section-sub{font-size:17px;color:var(--muted);max-width:600px;font-weight:300}
+.divider{height:1px;background:var(--border)}
+
+/* ─── WHAT'S INSIDE ─── */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature-card{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:32px 28px;transition:.25s;position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;top:0;right:0;left:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:.3s}
+body[dir="ltr"] .feature-card::before{transform-origin:left}
+.feature-card:hover::before{transform:scaleX(1)}
+.feature-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.feature-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px}
+.icon-blue{background:#EBF3FF;color:#1A56A8}
+.icon-amber{background:#FEF3D6;color:#92600A}
+.icon-green{background:#EDFAF2;color:#1D6A46}
+.feature-card h3{font-size:18px;font-weight:700;margin-bottom:10px;color:var(--navy)}
+.feature-card p{font-size:14px;color:var(--muted);line-height:1.7}
+.feature-badge{display:inline-block;margin-top:14px;font-size:12px;font-weight:600;background:var(--bg);border:1px solid var(--border);padding:4px 12px;border-radius:40px;color:var(--muted)}
+
+/* ─── CASE STUDIES ─── */
+.cases-section{background:var(--navy);padding:80px 0}
+.cases-section .section-tag{background:rgba(197,160,89,0.15);color:var(--gold)}
+.cases-section .section-title{color:#fff}
+.cases-section .section-sub{color:rgba(255,255,255,0.6)}
+.cases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.case-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+  border-radius:var(--radius);padding:24px;transition:.2s;
+}
+.case-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(197,160,89,0.3)}
+.case-flag{font-size:24px;margin-bottom:14px;display:block}
+.case-title{font-size:16px;font-weight:700;color:#e2eaf6;margin-bottom:4px}
+.case-year{font-size:12px;color:var(--gold);font-weight:600;margin-bottom:12px}
+.case-tool{font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:6px}
+.case-penalty{font-size:13px;font-weight:600;color:#FCA5A5;margin-bottom:12px}
+.case-alert{
+  background:rgba(200,50,50,0.12);border:1px solid rgba(200,50,50,0.25);
+  border-radius:8px;padding:10px 14px;font-size:13px;color:#FCA5A5;
+}
+.case-more{margin-top:32px;text-align:center}
+.case-more-btn{
+  background:rgba(197,160,89,0.12);border:1px solid rgba(197,160,89,0.3);
+  padding:12px 28px;border-radius:40px;color:var(--gold);font-size:14px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:.2s;
+}
+.case-more-btn:hover{background:rgba(197,160,89,0.22)}
+
+/* ─── TIMELINE ─── */
+.timeline{position:relative;padding-right:32px}
+body[dir="ltr"] .timeline{padding-right:0;padding-left:32px}
+.timeline::before{
+  content:'';position:absolute;right:0;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,var(--gold),var(--border));
+  border-radius:2px;
+}
+body[dir="ltr"] .timeline::before{right:auto;left:0}
+.timeline-item{position:relative;margin-bottom:36px;padding-bottom:0}
+.timeline-dot{
+  position:absolute;right:-41px;top:4px;
+  width:18px;height:18px;border-radius:50%;background:var(--gold);border:3px solid var(--white);
+  box-shadow:0 0 0 2px var(--gold);
+}
+body[dir="ltr"] .timeline-dot{right:auto;left:-41px}
+.timeline-year{font-size:12px;font-weight:700;color:var(--gold-dark);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em}
+.timeline-text{font-size:15px;color:var(--ink);font-weight:500;margin-bottom:4px}
+.timeline-detail{font-size:14px;color:var(--muted)}
+
+/* ─── STATS SECTION ─── */
+.stats-section{background:var(--white);padding:72px 0}
+.stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border)}
+.stat-block{background:var(--white);padding:36px 28px;text-align:center}
+.stat-number{font-size:42px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:8px}
+.stat-number span{color:var(--gold)}
+.stat-label{font-size:14px;color:var(--muted);font-weight:400}
+
+/* ─── PCS FRAMEWORK ─── */
+.pcs-section{background:linear-gradient(135deg,#F7F9FC 0%,#EFF4FB 100%);padding:80px 0}
+.pcs-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.steps-list{counter-reset:steps;display:flex;flex-direction:column;gap:20px}
+.step-item{display:flex;gap:16px;align-items:flex-start}
+.step-num{
+  min-width:36px;height:36px;border-radius:50%;background:var(--navy);
+  color:var(--gold);display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;flex-shrink:0;
+}
+.step-body h4{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.step-body p{font-size:14px;color:var(--muted);line-height:1.6}
+
+.code-wrapper{background:var(--navy);border-radius:var(--radius-lg);overflow:hidden;border:1px solid rgba(197,160,89,0.2)}
+.code-topbar{display:flex;align-items:center;gap:8px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.code-dot{width:10px;height:10px;border-radius:50%}
+.code-label{font-size:12px;color:rgba(255,255,255,0.4);font-family:'IBM Plex Mono',monospace;margin-right:auto}
+body[dir="ltr"] .code-label{margin-right:0;margin-left:auto}
+.code-content{padding:24px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.8;white-space:pre-wrap;word-break:break-word;color:#A8C4E8}
+.code-key{color:#F9C74F}
+.code-val{color:#90E0AB}
+.code-str{color:#FFB4A2}
+
+/* ─── PENALTIES TABLE ─── */
+.table-section{padding:80px 0}
+.table-outer{overflow-x:auto;border-radius:var(--radius-lg);box-shadow:var(--shadow);border:1px solid var(--border)}
+table.penalties{width:100%;border-collapse:collapse;background:var(--white)}
+table.penalties thead{background:var(--navy)}
+table.penalties th{padding:16px 20px;text-align:right;color:var(--gold-light);font-size:13px;font-weight:600;letter-spacing:0.04em;white-space:nowrap}
+body[dir="ltr"] table.penalties th{text-align:left}
+table.penalties td{padding:16px 20px;border-bottom:1px solid var(--border);font-size:14px;color:var(--ink);text-align:right}
+body[dir="ltr"] table.penalties td{text-align:left}
+table.penalties tr:last-child td{border-bottom:none}
+table.penalties tr:hover td{background:#F7F9FC}
+.country-cell{display:flex;align-items:center;gap:10px}
+.flag-icon{font-size:20px;line-height:1}
+.country-name{font-weight:600}
+.severity-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:40px;font-size:12px;font-weight:600}
+.sev-high{background:#FDECEC;color:#B91C1C}
+.sev-med{background:#FEF3D6;color:#92600A}
+.sev-watch{background:#EFF4FB;color:#1A56A8}
+
+/* ─── CHECKLIST ─── */
+.checklist-section{background:var(--navy);padding:80px 0}
+.checklist-section .section-tag{background:rgba(197,160,89,0.15);color:var(--gold)}
+.checklist-section .section-title{color:#fff}
+.checklist-section .section-sub{color:rgba(255,255,255,0.6)}
+.checklist-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.check-item{
+  display:flex;align-items:flex-start;gap:14px;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--radius);padding:18px 20px;
+  cursor:pointer;transition:.2s;user-select:none;
+}
+.check-item:hover{background:rgba(255,255,255,0.07)}
+.check-item.checked{border-color:rgba(29,106,70,0.4);background:rgba(29,106,70,0.08)}
+.check-box{
+  width:22px;height:22px;border-radius:6px;border:2px solid rgba(255,255,255,0.2);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  transition:.2s;color:#34D399;font-size:13px;font-weight:700;
+}
+.check-item.checked .check-box{background:rgba(52,211,153,0.15);border-color:#34D399}
+.check-text{font-size:14px;color:rgba(255,255,255,0.75);line-height:1.6}
+.check-item.checked .check-text{color:rgba(255,255,255,0.45);text-decoration:line-through;text-decoration-color:rgba(255,255,255,0.2)}
+.progress-bar-wrap{margin-top:32px;background:rgba(255,255,255,0.08);border-radius:40px;height:8px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,#34D399,#059669);border-radius:40px;transition:.4s;width:0%}
+.progress-label{display:flex;justify-content:space-between;margin-top:10px}
+.progress-label span{font-size:13px;color:rgba(255,255,255,0.5)}
+.progress-label strong{font-size:13px;color:#34D399;font-weight:600}
+
+/* ─── DOWNLOAD CTA ─── */
+.cta-section{
+  background:linear-gradient(135deg,var(--navy) 0%,#0e2748 100%);
+  padding:80px 0;text-align:center;position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(197,160,89,0.06) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
+}
+.cta-section h2{font-size:clamp(28px,4vw,40px);font-weight:700;color:#fff;margin-bottom:16px}
+.cta-section p{font-size:17px;color:rgba(255,255,255,0.65);max-width:560px;margin:0 auto 36px;font-weight:300}
+.cta-form{display:flex;gap:12px;max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.cta-input{
+  flex:1;min-width:220px;padding:13px 18px;border-radius:40px;
+  border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);
+  color:#fff;font-family:inherit;font-size:15px;outline:none;transition:.2s;
+}
+.cta-input::placeholder{color:rgba(255,255,255,0.35)}
+.cta-input:focus{border-color:var(--gold);background:rgba(255,255,255,0.12)}
+.cta-note{font-size:13px;color:rgba(255,255,255,0.35);margin-top:16px}
+
+/* ─── RESOURCES ─── */
+.resources-section{background:var(--white);padding:80px 0}
+.resources-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.resource-card{
+  border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;
+  transition:.2s;background:var(--white);
+}
+.resource-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.resource-header{padding:24px;background:linear-gradient(135deg,#0A1E3C,#1A3058)}
+.resource-type{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px}
+.resource-title{font-size:17px;font-weight:700;color:#fff;line-height:1.3}
+.resource-body{padding:20px 24px}
+.resource-desc{font-size:14px;color:var(--muted);margin-bottom:16px;line-height:1.65}
+.resource-link{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--gold-dark)}
+.resource-link svg{width:16px;height:16px}
+
+/* ─── FAQ ─── */
+.faq-section{background:var(--bg);padding:80px 0}
+.faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px;cursor:pointer;font-size:16px;font-weight:600;color:var(--navy);
+  gap:16px;transition:.2s;
+}
+.faq-q:hover{background:var(--bg)}
+.faq-icon{width:24px;height:24px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;transition:.3s;color:var(--gold-dark)}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--gold);color:var(--navy)}
+.faq-a{max-height:0;overflow:hidden;transition:.35s ease;font-size:15px;color:var(--muted);line-height:1.7}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a-inner{padding:0 24px 20px}
+
+/* ─── FOOTER ─── */
+.footer{background:#050F1E;color:#8EA4BF;padding:64px 0 36px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand{color:var(--gold);font-weight:700;font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.footer-brand span{color:#fff;font-weight:300}
+.footer-tagline{font-size:13px;line-height:1.7;color:#6A82A0}
+.footer-col h5{font-size:12px;font-weight:700;color:#8EA4BF;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-link{font-size:14px;color:#6A82A0;transition:.2s;cursor:pointer}
+.footer-link:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom-left{font-size:13px}
+.footer-bottom-right{font-size:12px;color:#4A5F78}
+.disclaimer{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius-sm);padding:16px 20px;font-size:13px;color:#4A5F78;margin-top:24px;line-height:1.6}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-card{display:none}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .pcs-grid{grid-template-columns:1fr}
+  .checklist-grid{grid-template-columns:1fr}
+  .resources-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .features-grid{grid-template-columns:1fr}
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .topbar{padding:12px 20px}
+  .section{padding:56px 0}
+  .container{padding:0 18px}
+  .footer-grid{grid-template-columns:1fr}
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.animate{animation:fadeUp .6s ease both}
+.delay-1{animation-delay:.1s}
+.delay-2{animation-delay:.2s}
+.delay-3{animation-delay:.3s}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body dir="rtl">
+
+<!-- TOP BAR -->
+<nav class="topbar">
+  <div class="topbar-logo">
+    ⚖️ <span data-ar="دليل النزاهة القانونية" data-en="Legal AI Integrity Guide">دليل النزاهة القانونية</span>
+  </div>
+  <div style="display:flex;gap:32px;align-items:center">
+    <div class="nav-links" style="display:flex;gap:24px;align-items:center">
+      <a data-ar="الحالات" data-en="Cases" href="#cases" style="font-size:14px;color:rgba(255,255,255,0.7);transition:.2s">الحالات</a>
+      <a data-ar="الإطار" data-en="Framework" href="#framework" style="font-size:14px;color:rgba(255,255,255,0.7);transition:.2s">الإطار</a>
+      <a data-ar="قائمة التحقق" data-en="Checklist" href="#checklist" style="font-size:14px;color:rgba(255,255,255,0.7);transition:.2s">قائمة التحقق</a>
+      <a data-ar="العقوبات" data-en="Penalties" href="#penalties" style="font-size:14px;color:rgba(255,255,255,0.7);transition:.2s">العقوبات</a>
+    </div>
+    <div class="lang-wrap">
+      <button class="lang-btn active" data-lang="ar">العربية</button>
+      <button class="lang-btn" data-lang="en">English</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="animate">
+        <div class="hero-tag animate delay-1">
+          📘 <span data-ar="إصدار 2026 – الطبعة الثالثة" data-en="2026 Edition – Version 3.0">إصدار 2026 – الطبعة الثالثة</span>
+        </div>
+        <h1 class="animate delay-1">
+          <span data-ar="مواجهة هلوسة الذكاء الاصطناعي" data-en="Confronting">مواجهة</span>
+          <em data-ar=" هلوسة الذكاء الاصطناعي" data-en=" AI Hallucinations"> هلوسة الذكاء الاصطناعي</em><br>
+          <span data-ar="وحماية النزاهة القانونية" data-en="& Protecting Legal Integrity">وحماية النزاهة القانونية</span>
+        </h1>
+        <p class="hero-sub animate delay-2" data-ar="الدليل القانوني الأشمل لعام 2026 – يضم أحكاماً قضائية وعقوبات فعلية من 6 دول، مع إطار PCS‑Legal للصياغة الآمنة وبروتوكول التحقق رباعي الخطوات." data-en="The most comprehensive legal guide for 2026 – featuring real judicial sanctions from 6 countries, the PCS‑Legal prompting framework, and a 4-step verification protocol.">الدليل القانوني الأشمل لعام 2026 – يضم أحكاماً قضائية وعقوبات فعلية من 6 دول، مع إطار PCS‑Legal للصياغة الآمنة وبروتوكول التحقق رباعي الخطوات.</p>
+        <div class="hero-cta-row animate delay-3">
+          <button class="btn-primary" data-ar="⬇ تحميل مجاني للمختصين" data-en="⬇ Free Download for Legal Pros">⬇ تحميل مجاني للمختصين</button>
+          <button class="btn-outline" onclick="document.getElementById('cases').scrollIntoView({behavior:'smooth'})" data-ar="← استعرض الحالات" data-en="← Browse Cases">← استعرض الحالات</button>
+        </div>
+        <div class="stats-row animate delay-3">
+          <div class="stat-badge"><strong>500+</strong> <span data-ar="حالة أمريكية" data-en="US cases">حالة أمريكية</span></div>
+          <div class="stat-badge"><strong>249</strong> <span data-ar="استشهاداً مهلوساً في كندا" data-en="hallucinated citations (Canada)">استشهاداً مهلوساً في كندا</span></div>
+          <div class="stat-badge"><strong>6</strong> <span data-ar="دول مشمولة" data-en="countries covered">دول مشمولة</span></div>
+          <div class="stat-badge"><strong data-ar="حتى أبريل 2026" data-en="Through April 2026">حتى أبريل 2026</strong></div>
+        </div>
+      </div>
+      <div class="hero-card animate delay-2">
+        <div class="hero-card-title" data-ar="آخر الحالات الموثقة" data-en="Latest Documented Cases">آخر الحالات الموثقة</div>
+        <div class="mini-case">
+          <div class="mini-case-name">Mata v. Avianca</div>
+          <div class="mini-case-info" data-ar="🇺🇸 نيويورك · ChatGPT · 2023" data-en="🇺🇸 New York · ChatGPT · 2023">🇺🇸 نيويورك · ChatGPT · 2023</div>
+          <div class="mini-case-penalty" data-ar="غرامة $5,000 + إحالة النقابة" data-en="$5,000 fine + bar referral">غرامة $5,000 + إحالة النقابة</div>
+        </div>
+        <div class="mini-case">
+          <div class="mini-case-name">Harris v. Commissioner</div>
+          <div class="mini-case-info" data-ar="🇦🇺 أستراليا · 2024" data-en="🇦🇺 Australia · 2024">🇦🇺 أستراليا · 2024</div>
+          <div class="mini-case-penalty" data-ar="تكاليف الخصم + إشراف عامين" data-en="Costs awarded + 2yr supervision">تكاليف الخصم + إشراف عامين</div>
+        </div>
+        <div class="mini-case">
+          <div class="mini-case-name">Delhi High Court</div>
+          <div class="mini-case-info" data-ar="🇮🇳 الهند · 2025" data-en="🇮🇳 India · 2025">🇮🇳 الهند · 2025</div>
+          <div class="mini-case-penalty" data-ar="₹50,000 + شطب الالتماس" data-en="₹50,000 + petition struck">₹50,000 + شطب الالتماس</div>
+        </div>
+        <div class="mini-case">
+          <div class="mini-case-name">Specter Aviation Inc.</div>
+          <div class="mini-case-info" data-ar="🇨🇦 كندا · 2024" data-en="🇨🇦 Canada · 2024">🇨🇦 كندا · 2024</div>
+          <div class="mini-case-penalty" data-ar="249 استشهاداً مهلوساً" data-en="249 hallucinated citations">249 استشهاداً مهلوساً</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="container">
+    <div class="trust-inner">
+      <div class="trust-label" data-ar="جهات مرجعية:" data-en="Referenced by:">جهات مرجعية:</div>
+      <div class="trust-logos">
+        <span class="trust-logo" data-ar="🇺🇸 نقابة محامي نيويورك" data-en="🇺🇸 NY State Bar">🇺🇸 نقابة محامي نيويورك</span>
+        <span class="trust-logo" data-ar="🇨🇦 المحاكم الفيدرالية الكندية" data-en="🇨🇦 Canadian Federal Courts">🇨🇦 المحاكم الفيدرالية الكندية</span>
+        <span class="trust-logo" data-ar="🇦🇺 المحكمة الفيدرالية الأسترالية" data-en="🇦🇺 Australian Federal Court">🇦🇺 المحكمة الفيدرالية الأسترالية</span>
+        <span class="trust-logo" data-ar="🇮🇳 محكمة دلهي العليا" data-en="🇮🇳 Delhi High Court">🇮🇳 محكمة دلهي العليا</span>
+        <span class="trust-logo" data-ar="🇯🇴 مجلس القضاء الأردني" data-en="🇯🇴 Jordan Judicial Council">🇯🇴 مجلس القضاء الأردني</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="container">
+    <div class="stats-inner reveal">
+      <div class="stat-block">
+        <div class="stat-number">500<span>+</span></div>
+        <div class="stat-label" data-ar="حالة موثقة في الولايات المتحدة" data-en="Documented US cases">حالة موثقة في الولايات المتحدة</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">6</div>
+        <div class="stat-label" data-ar="دول تصدر عقوبات على المحامين" data-en="Countries imposing sanctions">دول تصدر عقوبات على المحامين</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">$<span>15k</span></div>
+        <div class="stat-label" data-ar="أقصى غرامة موثقة (أمريكا)" data-en="Maximum documented fine (USA)">أقصى غرامة موثقة (أمريكا)</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">249</div>
+        <div class="stat-label" data-ar="استشهاداً مهلوساً في قضية كندية واحدة" data-en="Hallucinated citations in a single Canadian case">استشهاداً مهلوساً في قضية كندية واحدة</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT'S INSIDE -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag" data-ar="محتوى الدليل" data-en="Guide Contents">محتوى الدليل</div>
+      <h2 class="section-title" data-ar="ما يحتويه الدليل" data-en="What's Inside">ما يحتويه الدليل</h2>
+      <p class="section-sub" data-ar="دليل شامل يجمع بين التحليل القانوني المقارن والأدوات العملية للمختصين." data-en="A comprehensive guide combining comparative legal analysis with practical tools for legal professionals.">دليل شامل يجمع بين التحليل القانوني المقارن والأدوات العملية للمختصين.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon icon-amber">✅</div>
+        <h3 data-ar="بروتوكول التحقق رباعي الخطوات" data-en="4‑Step Verification Protocol">بروتوكول التحقق رباعي الخطوات</h3>
+        <p data-ar="إجراء منهجي لكشف الاستشهادات المختلقة والتحقق من أصالة كل قضية قبل تقديمها للمحكمة." data-en="A systematic procedure to detect fabricated citations and verify the authenticity of every case before court submission.">إجراء منهجي لكشف الاستشهادات المختلقة والتحقق من أصالة كل قضية قبل تقديمها للمحكمة.</p>
+        <span class="feature-badge" data-ar="الأداة الأساسية" data-en="Core Tool">الأداة الأساسية</span>
+      </div>
+      <div class="feature-card reveal delay-1">
+        <div class="feature-icon icon-blue">🧠</div>
+        <h3 data-ar="نموذج PCS‑Legal للصياغة الآمنة" data-en="PCS‑Legal Prompting Framework">نموذج PCS‑Legal للصياغة الآمنة</h3>
+        <p data-ar="منهجية صياغة أوامر الذكاء الاصطناعي بطريقة تقلل من الهلوسة وتضمن مخرجات موثوقة وقابلة للتحقق." data-en="A methodology for crafting AI prompts that minimize hallucination and ensure reliable, verifiable outputs.">منهجية صياغة أوامر الذكاء الاصطناعي بطريقة تقلل من الهلوسة وتضمن مخرجات موثوقة وقابلة للتحقق.</p>
+        <span class="feature-badge" data-ar="إطار عمل" data-en="Framework">إطار عمل</span>
+      </div>
+      <div class="feature-card reveal delay-2">
+        <div class="feature-icon icon-green">⚖️</div>
+        <h3 data-ar="جدول العقوبات المقارن (6 دول)" data-en="Comparative Sanctions Table (6 countries)">جدول العقوبات المقارن (6 دول)</h3>
+        <p data-ar="مقارنة شاملة للعقوبات المالية والتأديبية عبر الولايات المتحدة، كندا، أستراليا، الهند، إسرائيل، والأردن." data-en="A full comparison of financial and disciplinary penalties across the USA, Canada, Australia, India, Israel, and Jordan.">مقارنة شاملة للعقوبات المالية والتأديبية عبر الولايات المتحدة، كندا، أستراليا، الهند، إسرائيل، والأردن.</p>
+        <span class="feature-badge" data-ar="6 دول" data-en="6 countries">6 دول</span>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon icon-amber">📊</div>
+        <h3 data-ar="تحليل خط زمني 2023–2026" data-en="Timeline Analysis 2023–2026">تحليل خط زمني 2023–2026</h3>
+        <p data-ar="تتبع تطور القضايا والعقوبات عبر ثلاث سنوات، مع تحليل الاتجاهات القضائية الناشئة." data-en="Tracking the evolution of cases and sanctions over three years, with analysis of emerging judicial trends.">تتبع تطور القضايا والعقوبات عبر ثلاث سنوات، مع تحليل الاتجاهات القضائية الناشئة.</p>
+        <span class="feature-badge" data-ar="تحليل اتجاهات" data-en="Trend Analysis">تحليل اتجاهات</span>
+      </div>
+      <div class="feature-card reveal delay-1">
+        <div class="feature-icon icon-blue">📋</div>
+        <h3 data-ar="قائمة التحقق التفاعلية" data-en="Interactive Verification Checklist">قائمة التحقق التفاعلية</h3>
+        <p data-ar="أداة عملية قابلة للطباعة للتحقق من كل عناصر الاستشهاد قبل التقديم، مع تتبع الإكمال." data-en="A practical printable tool for verifying every citation element before submission, with completion tracking.">أداة عملية قابلة للطباعة للتحقق من كل عناصر الاستشهاد قبل التقديم، مع تتبع الإكمال.</p>
+        <span class="feature-badge" data-ar="قابل للتحميل" data-en="Downloadable">قابل للتحميل</span>
+      </div>
+      <div class="feature-card reveal delay-2">
+        <div class="feature-icon icon-green">🌍</div>
+        <h3 data-ar="إرشادات الإفصاح عن الذكاء الاصطناعي" data-en="AI Disclosure Guidelines">إرشادات الإفصاح عن الذكاء الاصطناعي</h3>
+        <p data-ar="معايير الإفصاح عن استخدام الذكاء الاصطناعي أمام المحاكم في كل ولاية قضائية مشمولة." data-en="Standards for AI disclosure to courts in each covered jurisdiction.">معايير الإفصاح عن استخدام الذكاء الاصطناعي أمام المحاكم في كل ولاية قضائية مشمولة.</p>
+        <span class="feature-badge" data-ar="امتثال قانوني" data-en="Legal Compliance">امتثال قانوني</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CASE STUDIES -->
+<section class="cases-section" id="cases">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag" data-ar="حالات موثقة" data-en="Documented Cases">حالات موثقة</div>
+      <h2 class="section-title" data-ar="قضايا حقيقية وعقوباتها" data-en="Real Cases & Their Penalties">قضايا حقيقية وعقوباتها</h2>
+      <p class="section-sub" data-ar="وقائع موثقة من محاكم رسمية حول العالم، تكشف الثمن الحقيقي للاعتماد على الذكاء الاصطناعي دون تحقق." data-en="Documented events from official courts worldwide, revealing the real cost of relying on AI without verification.">وقائع موثقة من محاكم رسمية حول العالم، تكشف الثمن الحقيقي للاعتماد على الذكاء الاصطناعي دون تحقق.</p>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card reveal">
+        <span class="case-flag">🇺🇸</span>
+        <div class="case-title">Mata v. Avianca</div>
+        <div class="case-year">2023 · المحكمة الجنوبية لنيويورك</div>
+        <div class="case-tool" data-ar="أداة الذكاء الاصطناعي: ChatGPT" data-en="AI Tool: ChatGPT">أداة الذكاء الاصطناعي: ChatGPT</div>
+        <div class="case-penalty" data-ar="💰 غرامة $5,000 · إحالة للنقابة · تدريب إلزامي" data-en="💰 $5,000 fine · Bar referral · Mandatory CLE">💰 غرامة $5,000 · إحالة للنقابة · تدريب إلزامي</div>
+        <div class="case-alert" data-ar="🚩 7 قضايا مختلقة بالكامل مع أسماء قضاة ومجلدات وهمية" data-en="🚩 7 entirely fabricated cases with fake judge names and volumes">🚩 7 قضايا مختلقة بالكامل مع أسماء قضاة ومجلدات وهمية</div>
+      </div>
+      <div class="case-card reveal delay-1">
+        <span class="case-flag">🇦🇺</span>
+        <div class="case-title">Harris v. Commissioner</div>
+        <div class="case-year">2024 · المحكمة الفيدرالية الأسترالية</div>
+        <div class="case-tool" data-ar="أداة الذكاء الاصطناعي: برنامج قانوني غير محدد" data-en="AI Tool: Unspecified legal AI">أداة الذكاء الاصطناعي: برنامج قانوني غير محدد</div>
+        <div class="case-penalty" data-ar="💰 دفع تكاليف الخصم · إشراف مهني عامين" data-en="💰 Paid opponent's costs · 2-year supervised practice">💰 دفع تكاليف الخصم · إشراف مهني عامين</div>
+        <div class="case-alert" data-ar="🚩 المحامي ادعى أن الاستشهادات من ذاكرته الشخصية" data-en="🚩 Lawyer falsely claimed citations were from personal memory">🚩 المحامي ادعى أن الاستشهادات من ذاكرته الشخصية</div>
+      </div>
+      <div class="case-card reveal delay-2">
+        <span class="case-flag">🇮🇳</span>
+        <div class="case-title">Delhi High Court Order</div>
+        <div class="case-year">2025 · محكمة دلهي العليا</div>
+        <div class="case-tool" data-ar="أداة الذكاء الاصطناعي: غير محددة" data-en="AI Tool: Unspecified">أداة الذكاء الاصطناعي: غير محددة</div>
+        <div class="case-penalty" data-ar="💰 غرامة ₹50,000 · شطب الالتماس · إحالة لتعليق الرخصة" data-en="💰 ₹50,000 fine · Petition struck · License suspension referral">💰 غرامة ₹50,000 · شطب الالتماس · إحالة لتعليق الرخصة</div>
+        <div class="case-alert" data-ar="🚩 أحكام قضائية غير موجودة بالكامل تضمنت تواريخ مستقبلية" data-en="🚩 Entirely non-existent judgments with future dates">🚩 أحكام قضائية غير موجودة بالكامل تضمنت تواريخ مستقبلية</div>
+      </div>
+      <div class="case-card reveal">
+        <span class="case-flag">🇨🇦</span>
+        <div class="case-title">Specter Aviation Inc.</div>
+        <div class="case-year">2024 · المحاكم الفيدرالية الكندية</div>
+        <div class="case-tool" data-ar="أداة الذكاء الاصطناعي: غير محددة" data-en="AI Tool: Unspecified">أداة الذكاء الاصطناعي: غير محددة</div>
+        <div class="case-penalty" data-ar="💰 غرامة $5,000 · شطب الاستشهادات · إحالة للهيئات المهنية" data-en="💰 $5,000 fine · Citations struck · Professional body referral">💰 غرامة $5,000 · شطب الاستشهادات · إحالة للهيئات المهنية</div>
+        <div class="case-alert" data-ar="🚩 249 استشهاداً مهلوساً في وثيقة واحدة" data-en="🚩 249 hallucinated citations in a single submission">🚩 249 استشهاداً مهلوساً في وثيقة واحدة</div>
+      </div>
+      <div class="case-card reveal delay-1">
+        <span class="case-flag">🇺🇸</span>
+        <div class="case-title">Steven A. Feldman Matter</div>
+        <div class="case-year">2024 · محكمة فيدرالية أمريكية</div>
+        <div class="case-tool" data-ar="أداة الذكاء الاصطناعي: نموذج لغوي كبير" data-en="AI Tool: Large Language Model">أداة الذكاء الاصطناعي: نموذج لغوي كبير</div>
+        <div class="case-penalty" data-ar="💰 غرامة $10,000 · تعليق الممارسة المؤقت" data-en="💰 $10,000 fine · Temporary suspension">💰 غرامة $10,000 · تعليق الممارسة المؤقت</div>
+        <div class="case-alert" data-ar="🚩 استشهادات بمحاكم لا وجود لها في الواقع" data-en="🚩 Citations to courts that don't exist">🚩 استشهادات بمحاكم لا وجود لها في الواقع</div>
+      </div>
+
+    </div>
+    <div class="case-more">
+      <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:16px" data-ar="الدليل يشمل تحليلاً كاملاً لأكثر من 50 حالة موثقة" data-en="The guide includes full analysis of 50+ documented cases">الدليل يشمل تحليلاً كاملاً لأكثر من 50 حالة موثقة</p>
+      <button class="case-more-btn" data-ar="تحميل الدليل الكامل ←" data-en="Download Full Guide ←">تحميل الدليل الكامل ←</button>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section" id="framework">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start">
+      <div class="reveal">
+        <div class="section-tag" data-ar="الخط الزمني" data-en="Timeline">الخط الزمني</div>
+        <h2 class="section-title" data-ar="تطور المشهد القانوني 2023–2026" data-en="Legal Landscape 2023–2026">تطور المشهد القانوني 2023–2026</h2>
+        <p class="section-sub" style="margin-bottom:40px" data-ar="من أول غرامة موثقة إلى تشريعات وطنية ناشئة." data-en="From the first documented fine to emerging national legislation.">من أول غرامة موثقة إلى تشريعات وطنية ناشئة.</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2023</div>
+            <div class="timeline-text" data-ar="Mata v. Avianca – الغرامة الأولى" data-en="Mata v. Avianca – First major fine">Mata v. Avianca – الغرامة الأولى</div>
+            <div class="timeline-detail" data-ar="فتحت الباب أمام موجة من العقوبات القضائية على مستوى العالم" data-en="Opened the door to a wave of global judicial sanctions">فتحت الباب أمام موجة من العقوبات القضائية على مستوى العالم</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2024 Q1</div>
+            <div class="timeline-text" data-ar="كندا وأستراليا تصدر أحكاماً مماثلة" data-en="Canada & Australia issue similar rulings">كندا وأستراليا تصدر أحكاماً مماثلة</div>
+            <div class="timeline-detail" data-ar="249 استشهاداً مهلوساً في كندا، إشراف عامين في أستراليا" data-en="249 hallucinated citations in Canada; 2-year supervision in Australia">249 استشهاداً مهلوساً في كندا، إشراف عامين في أستراليا</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2024 Q3</div>
+            <div class="timeline-text" data-ar="إسرائيل والهند ينضمان إلى قائمة العقوبات" data-en="Israel & India join the sanctions list">إسرائيل والهند ينضمان إلى قائمة العقوبات</div>
+            <div class="timeline-detail" data-ar="توبيخ علني في إسرائيل، شطب التماسات في الهند" data-en="Public reprimand in Israel, petitions struck in India">توبيخ علني في إسرائيل، شطب التماسات في الهند</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2025</div>
+            <div class="timeline-text" data-ar="محكمة دلهي العليا تصدر توجيهاً عاماً" data-en="Delhi High Court issues general directive">محكمة دلهي العليا تصدر توجيهاً عاماً</div>
+            <div class="timeline-detail" data-ar="أول توجيه قضائي رسمي يلزم المحامين بالإفصاح عن استخدام الذكاء الاصطناعي" data-en="First formal judicial directive requiring lawyers to disclose AI use">أول توجيه قضائي رسمي يلزم المحامين بالإفصاح عن استخدام الذكاء الاصطناعي</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year" style="color:#34D399">2026</div>
+            <div class="timeline-text" data-ar="الأردن يراقب ويطور إطاراً تنظيمياً" data-en="Jordan monitors and develops regulatory framework">الأردن يراقب ويطور إطاراً تنظيمياً</div>
+            <div class="timeline-detail" data-ar="مجلس القضاء الأردني يرصد التطورات ويعمل على ضوابط استخدام الذكاء الاصطناعي" data-en="Jordan Judicial Council monitoring developments, developing AI use guidelines">مجلس القضاء الأردني يرصد التطورات ويعمل على ضوابط استخدام الذكاء الاصطناعي</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PCS Framework -->
+      <div class="reveal delay-1" id="framework-detail">
+        <div class="section-tag" data-ar="الإطار العملي" data-en="Practical Framework">الإطار العملي</div>
+        <h2 class="section-title" data-ar="نموذج PCS‑Legal للصياغة الآمنة" data-en="PCS‑Legal Prompting Framework">نموذج PCS‑Legal للصياغة الآمنة</h2>
+        <p class="section-sub" style="margin-bottom:32px" data-ar="6 عناصر أساسية لكل أمر ذكاء اصطناعي في السياق القانوني." data-en="6 essential elements for every AI prompt in a legal context.">6 عناصر أساسية لكل أمر ذكاء اصطناعي في السياق القانوني.</p>
+        <div class="code-wrapper">
+          <div class="code-topbar">
+            <div class="code-dot" style="background:#FF6058"></div>
+            <div class="code-dot" style="background:#FFBD2E"></div>
+            <div class="code-dot" style="background:#28CA41"></div>
+            <div class="code-label" id="codeLabel">PCS-Legal · JSON · ar</div>
+          </div>
+          <div class="code-content" id="codeContent"><span class="code-key">"role"</span>: <span class="code-str">"مساعد تدقيق قانوني – قانون الشركات"</span>,
+<span class="code-key">"task"</span>: <span class="code-str">"البحث عن قضايا – اختراق القناع القانوني"</span>,
+<span class="code-key">"output_format"</span>: <span class="code-str">"جدول: اسم القضية، رقم الدعوى، المحكمة، التاريخ، ملخص الحكم"</span>,
+<span class="code-key">"sources_policy"</span>: <span class="code-str">"Westlaw أو قواعد بيانات المحاكم الرسمية فقط"</span>,
+<span class="code-key">"time_constraints"</span>: <span class="code-str">"2010 إلى 2024 فقط"</span>,
+<span class="code-key">"ambiguity_control"</span>: <span class="code-str">"إن لم تجد قضية حقيقية → \'لا توجد قضية\' – لا تختلق"</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PCS STEPS -->
+<section class="pcs-section" id="pcs">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;max-width:620px;margin:0 auto 52px">
+      <div class="section-tag" data-ar="بروتوكول التحقق" data-en="Verification Protocol">بروتوكول التحقق</div>
+      <h2 class="section-title" data-ar="الخطوات الأربع الإلزامية" data-en="4 Mandatory Verification Steps">الخطوات الأربع الإلزامية</h2>
+      <p class="section-sub" style="max-width:none" data-ar="قبل تقديم أي استشهاد ذكاء اصطناعي لمحكمة، يجب اتباع هذا البروتوكول كاملاً." data-en="Before submitting any AI-generated citation to court, this full protocol must be followed.">قبل تقديم أي استشهاد ذكاء اصطناعي لمحكمة، يجب اتباع هذا البروتوكول كاملاً.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:28px">
+      <div class="feature-card reveal" style="display:flex;gap:20px;align-items:flex-start">
+        <div style="min-width:48px;height:48px;background:var(--navy);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:22px;font-weight:700">1</div>
+        <div>
+          <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px" data-ar="التحقق من الوجود" data-en="Existence Verification">التحقق من الوجود</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.65" data-ar="ابحث عن القضية في قاعدتَي بيانات مستقلتين على الأقل (Westlaw + LexisNexis أو قواعد المحاكم الرسمية). إذا لم تجدها → أوقف العملية فوراً." data-en="Search for the case in at least two independent databases (Westlaw + LexisNexis or official court databases). If not found → Stop immediately.">ابحث عن القضية في قاعدتَي بيانات مستقلتين على الأقل (Westlaw + LexisNexis أو قواعد المحاكم الرسمية). إذا لم تجدها → أوقف العملية فوراً.</p>
+        </div>
+      </div>
+      <div class="feature-card reveal delay-1" style="display:flex;gap:20px;align-items:flex-start">
+        <div style="min-width:48px;height:48px;background:var(--navy);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:22px;font-weight:700">2</div>
+        <div>
+          <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px" data-ar="التحقق من البيانات الوصفية" data-en="Metadata Verification">التحقق من البيانات الوصفية</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.65" data-ar="قابل الأطراف، المحكمة، التاريخ، رقم المجلد والصفحة مع السجل الرسمي. أي اختلاف يعني هلوسة محتملة." data-en="Compare parties, court, date, volume, and page number against the official record. Any discrepancy indicates possible hallucination.">قابل الأطراف، المحكمة، التاريخ، رقم المجلد والصفحة مع السجل الرسمي. أي اختلاف يعني هلوسة محتملة.</p>
+        </div>
+      </div>
+      <div class="feature-card reveal" style="display:flex;gap:20px;align-items:flex-start">
+        <div style="min-width:48px;height:48px;background:var(--navy);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:22px;font-weight:700">3</div>
+        <div>
+          <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px" data-ar="التحقق من الحكم المنسوب" data-en="Holding Verification">التحقق من الحكم المنسوب</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.65" data-ar="اقرأ القضية الأصلية وتحقق أن المبدأ القانوني المذكور موجود فعلاً فيها، وأنه لم يُقتطع من سياقه." data-en="Read the original case and verify that the cited legal principle actually exists in it and hasn't been taken out of context.">اقرأ القضية الأصلية وتحقق أن المبدأ القانوني المذكور موجود فعلاً فيها، وأنه لم يُقتطع من سياقه.</p>
+        </div>
+      </div>
+      <div class="feature-card reveal delay-1" style="display:flex;gap:20px;align-items:flex-start">
+        <div style="min-width:48px;height:48px;background:var(--navy);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:22px;font-weight:700">4</div>
+        <div>
+          <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px" data-ar="التحقق من السريان والإفصاح" data-en="Currency & Disclosure">التحقق من السريان والإفصاح</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.65" data-ar="تحقق أن القضية لم تُلغَ أو تُقيَّد بقرارات لاحقة، ثم أفصح للمحكمة عن استخدامك للذكاء الاصطناعي وفق قواعد ولايتك القضائية." data-en="Verify the case hasn't been overruled or restricted by later decisions, then disclose AI use to the court per your jurisdiction's rules.">تحقق أن القضية لم تُلغَ أو تُقيَّد بقرارات لاحقة، ثم أفصح للمحكمة عن استخدامك للذكاء الاصطناعي وفق قواعد ولايتك القضائية.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PENALTIES TABLE -->
+<section class="table-section" id="penalties">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag" data-ar="مقارنة دولية" data-en="International Comparison">مقارنة دولية</div>
+      <h2 class="section-title" data-ar="جدول العقوبات المقارن" data-en="Comparative Penalties Table">جدول العقوبات المقارن</h2>
+      <p class="section-sub" data-ar="نظرة شاملة على الإطار القانوني والعقوبات التأديبية في 6 ولايات قضائية." data-en="A comprehensive view of the legal framework and disciplinary penalties across 6 jurisdictions.">نظرة شاملة على الإطار القانوني والعقوبات التأديبية في 6 ولايات قضائية.</p>
+    </div>
+    <div class="table-outer reveal">
+      <table class="penalties">
+        <thead>
+          <tr>
+            <th data-ar="الدولة" data-en="Country">الدولة</th>
+            <th data-ar="الغرامة المالية" data-en="Financial Penalty">الغرامة المالية</th>
+            <th data-ar="العقوبات التأديبية" data-en="Disciplinary Actions">العقوبات التأديبية</th>
+            <th data-ar="مستوى الخطورة" data-en="Severity Level">مستوى الخطورة</th>
+            <th data-ar="الحالات الموثقة" data-en="Documented Cases">الحالات الموثقة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="country-cell"><span class="flag-icon">🇺🇸</span><span class="country-name" data-ar="الولايات المتحدة" data-en="USA">الولايات المتحدة</span></div></td>
+            <td data-ar="$1,000 – $15,000" data-en="$1,000 – $15,000">$1,000 – $15,000</td>
+            <td data-ar="إحالة للنقابة · تدريب إلزامي · سحب قبول المحكمة" data-en="Bar referral · Mandatory CLE · Court admission withdrawal">إحالة للنقابة · تدريب إلزامي · سحب قبول المحكمة</td>
+            <td><span class="severity-badge sev-high" data-ar="عالي جداً" data-en="Very High">عالي جداً</span></td>
+            <td>500+</td>
+          </tr>
+          <tr>
+            <td><div class="country-cell"><span class="flag-icon">🇨🇦</span><span class="country-name" data-ar="كندا" data-en="Canada">كندا</span></div></td>
+            <td data-ar="$5,000 (كيبيك)" data-en="$5,000 (Quebec)">$5,000 (كيبيك)</td>
+            <td data-ar="إحالة للهيئات المهنية · شطب الاستشهادات · تحذير رسمي" data-en="Professional body referral · Striking citations · Formal warning">إحالة للهيئات المهنية · شطب الاستشهادات · تحذير رسمي</td>
+            <td><span class="severity-badge sev-high" data-ar="عالي" data-en="High">عالي</span></td>
+            <td>~40</td>
+          </tr>
+          <tr>
+            <td><div class="country-cell"><span class="flag-icon">🇦🇺</span><span class="country-name" data-ar="أستراليا" data-en="Australia">أستراليا</span></div></td>
+            <td data-ar="تكاليف الخصم" data-en="Opponent's costs">تكاليف الخصم</td>
+            <td data-ar="إشراف مهني عامين · سحب صلاحية المحامي الرئيسي" data-en="2-year supervised practice · Principal role withdrawal">إشراف مهني عامين · سحب صلاحية المحامي الرئيسي</td>
+            <td><span class="severity-badge sev-high" data-ar="عالي" data-en="High">عالي</span></td>
+            <td>~20</td>
+          </tr>
+          <tr>
+            <td><div class="country-cell"><span class="flag-icon">🇮🇳</span><span class="country-name" data-ar="الهند" data-en="India">الهند</span></div></td>
+            <td data-ar="₹50,000" data-en="₹50,000">₹50,000</td>
+            <td data-ar="شطب الالتماس · إحالة لتعليق الرخصة" data-en="Petition struck · License suspension referral">شطب الالتماس · إحالة لتعليق الرخصة</td>
+            <td><span class="severity-badge sev-high" data-ar="عالي" data-en="High">عالي</span></td>
+            <td>~15</td>
+          </tr>
+          <tr>
+            <td><div class="country-cell"><span class="flag-icon">🇮🇱</span><span class="country-name" data-ar="إسرائيل" data-en="Israel">إسرائيل</span></div></td>
+            <td data-ar="500 – 8,000 ₪" data-en="500 – 8,000 NIS">500 – 8,000 ₪</td>
+            <td data-ar="توبيخ علني رسمي · قيد في السجل المهني" data-en="Formal public reprimand · Professional record entry">توبيخ علني رسمي · قيد في السجل المهني</td>
+            <td><span class="severity-badge sev-med" data-ar="متوسط" data-en="Medium">متوسط</span></td>
+            <td>~8</td>
+          </tr>
+          <tr>
+            <td><div class="country-cell"><span class="flag-icon">🇯🇴</span><span class="country-name" data-ar="الأردن" data-en="Jordan">الأردن</span></div></td>
+            <td data-ar="قيد الدراسة" data-en="Under review">قيد الدراسة</td>
+            <td data-ar="مراقبة ورصد · إطار تنظيمي قيد الإعداد" data-en="Monitoring · Regulatory framework in development">مراقبة ورصد · إطار تنظيمي قيد الإعداد</td>
+            <td><span class="severity-badge sev-watch" data-ar="متابعة" data-en="Watch">متابعة</span></td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="checklist-section" id="checklist">
+  <div class="container">
+    <div class="section-header reveal" style="max-width:640px">
+      <div class="section-tag" data-ar="أداة التحقق" data-en="Verification Tool">أداة التحقق</div>
+      <h2 class="section-title" data-ar="قائمة التحقق التفاعلية" data-en="Interactive Verification Checklist">قائمة التحقق التفاعلية</h2>
+      <p class="section-sub" data-ar="أكمل القائمة قبل تقديم أي وثيقة تحتوي على استشهادات مولّدة بالذكاء الاصطناعي." data-en="Complete this list before submitting any document containing AI-generated citations.">أكمل القائمة قبل تقديم أي وثيقة تحتوي على استشهادات مولّدة بالذكاء الاصطناعي.</p>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-label">
+      <span data-ar="التقدم" data-en="Progress">التقدم</span>
+      <strong id="progressLabel">0 / 8</strong>
+    </div>
+    <div class="checklist-grid" id="checklistGrid"></div>
+    <div style="margin-top:32px;padding:20px 24px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:var(--radius);display:flex;align-items:center;gap:14px">
+      <span style="font-size:22px">🔴</span>
+      <span style="font-size:15px;color:rgba(255,255,255,0.8);font-weight:500" data-ar="ثق، لكن تحقق دائماً – الذكاء الاصطناعي أداة مساعدة لا مصدراً قانونياً. أنت المسؤول القانوني الوحيد عن كل ما تقدمه للمحكمة." data-en="Trust, but always verify – AI is an assistive tool, not a legal source. You alone are legally responsible for everything you submit to court.">ثق، لكن تحقق دائماً – الذكاء الاصطناعي أداة مساعدة لا مصدراً قانونياً. أنت المسؤول القانوني الوحيد عن كل ما تقدمه للمحكمة.</span>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="resources-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag" data-ar="المصادر والمراجع" data-en="Resources & References">المصادر والمراجع</div>
+      <h2 class="section-title" data-ar="موارد إضافية" data-en="Additional Resources">موارد إضافية</h2>
+      <p class="section-sub" data-ar="وثائق ومراجع رسمية لمعرفة أعمق في استخدام الذكاء الاصطناعي في الممارسة القانونية." data-en="Official documents and references for deeper knowledge on AI use in legal practice.">وثائق ومراجع رسمية لمعرفة أعمق في استخدام الذكاء الاصطناعي في الممارسة القانونية.</p>
+    </div>
+    <div class="resources-grid">
+      <div class="resource-card reveal">
+        <div class="resource-header">
+          <div class="resource-type" data-ar="حكم قضائي" data-en="Court Ruling">حكم قضائي</div>
+          <div class="resource-title">Mata v. Avianca, Inc.</div>
+        </div>
+        <div class="resource-body">
+          <div class="resource-desc" data-ar="النص الكامل لقرار القاضي Kevin Castel ضد المحامين الذين استخدموا ChatGPT دون تحقق – القضية المرجعية الأولى عالمياً." data-en="Full text of Judge Kevin Castel's ruling against lawyers who used ChatGPT without verification – the world's first reference case.">النص الكامل لقرار القاضي Kevin Castel ضد المحامين الذين استخدموا ChatGPT دون تحقق – القضية المرجعية الأولى عالمياً.</div>
+          <div class="resource-link">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            <span data-ar="قراءة الحكم الكامل" data-en="Read Full Ruling">قراءة الحكم الكامل</span>
+          </div>
+        </div>
+      </div>
+      <div class="resource-card reveal delay-1">
+        <div class="resource-header">
+          <div class="resource-type" data-ar="دليل مهني" data-en="Professional Guide">دليل مهني</div>
+          <div class="resource-title" data-ar="إرشادات نقابة المحامين الأمريكية (ABA) حول الذكاء الاصطناعي" data-en="ABA Guidance on AI Use in Legal Practice">إرشادات نقابة المحامين الأمريكية (ABA) حول الذكاء الاصطناعي</div>
+        </div>
+        <div class="resource-body">
+          <div class="resource-desc" data-ar="أحدث توجيهات نقابة المحامين الأمريكية حول الكفاءة التقنية والإفصاح عن الذكاء الاصطناعي أمام المحاكم." data-en="The latest ABA guidance on technological competence and AI disclosure requirements before courts.">أحدث توجيهات نقابة المحامين الأمريكية حول الكفاءة التقنية والإفصاح عن الذكاء الاصطناعي أمام المحاكم.</div>
+          <div class="resource-link">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            <span data-ar="الوصول للتوجيهات" data-en="Access Guidelines">الوصول للتوجيهات</span>
+          </div>
+        </div>
+      </div>
+      <div class="resource-card reveal delay-2">
+        <div class="resource-header">
+          <div class="resource-type" data-ar="ورقة بحثية" data-en="Research Paper">ورقة بحثية</div>
+          <div class="resource-title" data-ar="هلوسة الذكاء الاصطناعي في الممارسة القانونية: دراسة إحصائية 2023-2026" data-en="AI Hallucination in Legal Practice: Statistical Study 2023-2026">هلوسة الذكاء الاصطناعي: دراسة إحصائية 2023-2026</div>
+        </div>
+        <div class="resource-body">
+          <div class="resource-desc" data-ar="تحليل لأكثر من 500 حالة موثقة في المحاكم الأمريكية والدولية مع إحصاءات تفصيلية وتوصيات عملية." data-en="Analysis of 500+ documented cases in US and international courts with detailed statistics and practical recommendations.">تحليل لأكثر من 500 حالة موثقة في المحاكم الأمريكية والدولية مع إحصاءات تفصيلية وتوصيات عملية.</div>
+          <div class="resource-link">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            <span data-ar="قراءة الورقة البحثية" data-en="Read Research Paper">قراءة الورقة البحثية</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center">
+      <div class="section-tag" data-ar="أسئلة شائعة" data-en="FAQ">أسئلة شائعة</div>
+      <h2 class="section-title" data-ar="الأسئلة الأكثر شيوعاً" data-en="Frequently Asked Questions">الأسئلة الأكثر شيوعاً</h2>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- DOWNLOAD CTA -->
+<section class="cta-section">
+  <div class="container" style="position:relative">
+    <div class="reveal">
+      <h2 data-ar="احصل على الدليل الكامل مجاناً" data-en="Get the Full Guide for Free">احصل على الدليل الكامل مجاناً</h2>
+      <p data-ar="الإصدار الكامل يشمل تحليلاً لأكثر من 50 حالة، أدوات قابلة للتحميل، ونماذج صياغة PCS‑Legal جاهزة للاستخدام." data-en="The full edition includes analysis of 50+ cases, downloadable tools, and ready-to-use PCS‑Legal prompt templates.">الإصدار الكامل يشمل تحليلاً لأكثر من 50 حالة، أدوات قابلة للتحميل، ونماذج صياغة PCS‑Legal جاهزة للاستخدام.</p>
+      <div class="cta-form">
+        <input type="email" class="cta-input" id="emailInput" placeholder-ar="بريدك الإلكتروني المهني" placeholder-en="Your professional email" placeholder="بريدك الإلكتروني المهني">
+        <button class="btn-primary" onclick="handleDownload()" data-ar="⬇ تحميل الدليل" data-en="⬇ Download Guide">⬇ تحميل الدليل</button>
+      </div>
+      <p class="cta-note" data-ar="مجاني تماماً للمختصين القانونيين · لا إعلانات · لا اشتراكات" data-en="Completely free for legal professionals · No ads · No subscriptions">مجاني تماماً للمختصين القانونيين · لا إعلانات · لا اشتراكات</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">⚖️ <span data-ar="مشروع نزاهة الذكاء الاصطناعي القانوني" data-en="Legal AI Integrity Project">مشروع نزاهة الذكاء الاصطناعي القانوني</span></div>
+        <div class="footer-tagline" data-ar="نشر الوعي القانوني حول مخاطر الذكاء الاصطناعي وأدوات التحقق في الأوساط القانونية العربية والدولية." data-en="Raising legal awareness about AI risks and verification tools in Arabic and international legal communities.">نشر الوعي القانوني حول مخاطر الذكاء الاصطناعي وأدوات التحقق في الأوساط القانونية العربية والدولية.</div>
+        <div class="disclaimer" data-ar="هذا الدليل للأغراض التعليمية والتوجيهية. يتحمل المحامون المسؤولية الكاملة عن التحقق من جميع الاستشهادات القانونية المقدمة للمحاكم." data-en="This guide is for educational and guidance purposes only. Legal professionals remain solely responsible for verifying all legal citations submitted to courts.">هذا الدليل للأغراض التعليمية والتوجيهية. يتحمل المحامون المسؤولية الكاملة عن التحقق من جميع الاستشهادات القانونية المقدمة للمحاكم.</div>
+      </div>
+      <div>
+        <h5 data-ar="الدليل" data-en="Guide">الدليل</h5>
+        <div class="footer-links">
+          <a class="footer-link" href="#cases" data-ar="الحالات الموثقة" data-en="Documented Cases">الحالات الموثقة</a>
+          <a class="footer-link" href="#framework" data-ar="إطار PCS‑Legal" data-en="PCS‑Legal Framework">إطار PCS‑Legal</a>
+          <a class="footer-link" href="#checklist" data-ar="قائمة التحقق" data-en="Checklist">قائمة التحقق</a>
+          <a class="footer-link" href="#penalties" data-ar="جدول العقوبات" data-en="Penalties Table">جدول العقوبات</a>
+        </div>
+      </div>
+      <div>
+        <h5 data-ar="الولايات القضائية" data-en="Jurisdictions">الولايات القضائية</h5>
+        <div class="footer-links">
+          <span class="footer-link">🇺🇸 <span data-ar="الولايات المتحدة" data-en="United States">الولايات المتحدة</span></span>
+          <span class="footer-link">🇨🇦 <span data-ar="كندا" data-en="Canada">كندا</span></span>
+          <span class="footer-link">🇦🇺 <span data-ar="أستراليا" data-en="Australia">أستراليا</span></span>
+          <span class="footer-link">🇮🇳 <span data-ar="الهند" data-en="India">الهند</span></span>
+          <span class="footer-link">🇮🇱 <span data-ar="إسرائيل" data-en="Israel">إسرائيل</span></span>
+          <span class="footer-link">🇯🇴 <span data-ar="الأردن" data-en="Jordan">الأردن</span></span>
+        </div>
+      </div>
+      <div>
+        <h5 data-ar="المراجع" data-en="References">المراجع</h5>
+        <div class="footer-links">
+          <span class="footer-link">Mata v. Avianca</span>
+          <span class="footer-link">Harris v. Commissioner</span>
+          <span class="footer-link">Delhi High Court 2025</span>
+          <span class="footer-link">Specter Aviation Inc.</span>
+          <span class="footer-link">Steven A. Feldman</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">© 2026 – <span data-ar="مشروع نزاهة الذكاء الاصطناعي القانوني" data-en="Legal AI Integrity Project">مشروع نزاهة الذكاء الاصطناعي القانوني</span></div>
+      <div class="footer-bottom-right" data-ar="الإصدار 3.0 · يشمل التحديثات حتى 24 أبريل 2026" data-en="Version 3.0 · Includes updates through April 24, 2026">الإصدار 3.0 · يشمل التحديثات حتى 24 أبريل 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── DATA ───
+const checklistAr = [
+  "التحقق من الوجود: القضية موجودة في قاعدتَي بيانات مستقلتين على الأقل",
+  "التحقق من البيانات: الأطراف والمحكمة والتاريخ والمجلد متطابقة مع السجل الرسمي",
+  "التحقق من رقم الدعوى: الرقم يقود لنفس القضية المذكورة بالضبط",
+  "التحقق من الحكم: المبدأ القانوني المنسوب موجود فعلاً في القضية وليس منتزعاً من سياقه",
+  "التحقق من السريان: القضية لا تزال سارية ولم تُلغَ أو تُقيَّد",
+  "الإفصاح: تم إبلاغ المحكمة باستخدام أدوات الذكاء الاصطناعي وفق قواعد الولاية القضائية",
+  "سجل التدقيق: تم حفظ لقطات شاشة وروابط وطباعة ورقية من المصادر الرسمية",
+  "مراجعة علامات الخطر: لا تواريخ مستقبلية، لا أسماء عامة، لا أرقام دعاوى مفقودة"
+];
+const checklistEn = [
+  "Existence check: case found in at least two independent databases",
+  "Metadata check: parties, court, date, volume match official record exactly",
+  "Docket check: docket number leads to exactly the same case",
+  "Holding check: cited legal proposition actually exists in case, not taken out of context",
+  "Currency check: case still good law, not overruled or restricted",
+  "Disclosure: AI use disclosed to court per jurisdiction rules",
+  "Audit trail: screenshots, links, and paper prints from official sources saved",
+  "Red flags reviewed: no future dates, no generic names, no missing docket numbers"
+];
+
+const faqAr = [
+  {q:"هل يُحظر على المحامين استخدام الذكاء الاصطناعي؟",a:"لا، الاستخدام مسموح به في معظم الولايات القضائية. لكن المحامي مسؤول قانونياً عن التحقق من كل استشهاد. استخدام الذكاء الاصطناعي دون تحقق قد يُعرّضك لعقوبات مهنية."},
+  {q:"ما الفرق بين هلوسة الذكاء الاصطناعي والخطأ القانوني العادي؟",a:"هلوسة الذكاء الاصطناعي تعني اختلاق قضايا غير موجودة كلياً بأسماء وأرقام مقنعة. الخطأ القانوني العادي قد يكون سوء فهم أو تفسير. الهلوسة أشد خطورة لأنها تُضلل المحكمة بشكل كامل."},
+  {q:"هل يجب الإفصاح عن استخدام الذكاء الاصطناعي للمحكمة؟",a:"يتفاوت الإلزام بالإفصاح بحسب الولاية القضائية. في الولايات المتحدة، بعض المحاكم الفيدرالية تشترط الإفصاح صراحةً. في الهند، محكمة دلهي أصدرت توجيهاً بإلزامية الإفصاح عام 2025. يُنصح بالإفصاح دائماً من باب الاحتياط."},
+  {q:"ما أفضل أدوات التحقق من الاستشهادات القانونية؟",a:"Westlaw وLexisNexis هما الأكثر موثوقية. يمكن أيضاً استخدام Google Scholar للقضايا الأمريكية، وقواعد بيانات المحاكم الرسمية. المهم دائماً استخدام مصدرَين مستقلَّين."},
+  {q:"ما الموقف القانوني في الأردن من هلوسة الذكاء الاصطناعي؟",a:"الأردن في مرحلة الرصد والمتابعة. مجلس القضاء الأردني يتابع التطورات الدولية ويعمل على إعداد إطار تنظيمي. لا توجد عقوبات رسمية محددة بعد، لكن قواعد المسؤولية المهنية العامة تنطبق."}
+];
+const faqEn = [
+  {q:"Are lawyers prohibited from using AI?",a:"No, AI use is allowed in most jurisdictions. However, lawyers remain legally responsible for verifying every citation. Using AI without verification may expose you to professional sanctions."},
+  {q:"What's the difference between AI hallucination and ordinary legal error?",a:"AI hallucination means fabricating entirely non-existent cases with convincing names and numbers. An ordinary legal error might be a misunderstanding or misinterpretation. Hallucination is more dangerous because it completely misleads the court."},
+  {q:"Must AI use be disclosed to the court?",a:"Disclosure obligations vary by jurisdiction. In the USA, some federal courts explicitly require disclosure. In India, the Delhi High Court issued a mandatory disclosure directive in 2025. As a precaution, disclosure is always recommended."},
+  {q:"What are the best tools for verifying legal citations?",a:"Westlaw and LexisNexis are most reliable. Google Scholar works for US cases, along with official court databases. Always use at least two independent sources."},
+  {q:"What is Jordan's legal position on AI hallucination?",a:"Jordan is in a monitoring and observation phase. The Jordan Judicial Council is tracking international developments and working on a regulatory framework. No specific official penalties yet, but general professional responsibility rules apply."}
+];
+
+// ─── STATE ───
+let currentLang = 'ar';
+let checkedItems = new Array(8).fill(false);
+
+// ─── INIT ───
+function init() {
+  renderChecklist();
+  renderFAQ();
+}
+
+// ─── LANG SWITCH ───
+const langBtns = document.querySelectorAll('.lang-btn');
+langBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lang = btn.getAttribute('data-lang');
+    setLanguage(lang);
+  });
+});
+
+function setLanguage(lang) {
+  currentLang = lang;
+  const body = document.body;
+  const root = document.documentElement;
+  if (lang === 'en') {
+    body.dir = 'ltr'; root.setAttribute('lang','en');
+  } else {
+    body.dir = 'rtl'; root.setAttribute('lang','ar');
+  }
+  document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+    el.textContent = el.getAttribute('data-' + lang);
+  });
+  document.querySelectorAll('[data-ar]').forEach(el => {
+    if (!el.hasAttribute('data-en')) el.textContent = el.getAttribute('data-' + lang);
+  });
+  // email placeholder
+  const emailInput = document.getElementById('emailInput');
+  if (emailInput) emailInput.placeholder = lang === 'ar' ? 'بريدك الإلكتروني المهني' : 'Your professional email';
+  // code block
+  updateCodeBlock(lang);
+  // code label
+  const codeLabel = document.getElementById('codeLabel');
+  if (codeLabel) codeLabel.textContent = lang === 'ar' ? 'PCS-Legal · JSON · ar' : 'PCS-Legal · JSON · en';
+  // checklist & FAQ
+  renderChecklist();
+  renderFAQ();
+  // buttons
+  langBtns.forEach(b => {
+    if (b.getAttribute('data-lang') === lang) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+}
+
+function updateCodeBlock(lang) {
+  const el = document.getElementById('codeContent');
+  if (!el) return;
+  const ar = `<span class="code-key">"role"</span>: <span class="code-str">"مساعد تدقيق قانوني – قانون الشركات"</span>,\n<span class="code-key">"task"</span>: <span class="code-str">"البحث عن قضايا – اختراق القناع القانوني"</span>,\n<span class="code-key">"output_format"</span>: <span class="code-str">"جدول: اسم القضية، رقم الدعوى، المحكمة، التاريخ، ملخص الحكم"</span>,\n<span class="code-key">"sources_policy"</span>: <span class="code-str">"Westlaw أو قواعد بيانات المحاكم الرسمية فقط"</span>,\n<span class="code-key">"time_constraints"</span>: <span class="code-str">"2010 إلى 2024 فقط"</span>,\n<span class="code-key">"ambiguity_control"</span>: <span class="code-str">"إن لم تجد قضية حقيقية → 'لا توجد قضية' – لا تختلق"</span>`;
+  const en = `<span class="code-key">"role"</span>: <span class="code-str">"Legal auditing assistant – corporate law"</span>,\n<span class="code-key">"task"</span>: <span class="code-str">"Find cases supporting 'piercing the corporate veil'"</span>,\n<span class="code-key">"output_format"</span>: <span class="code-str">"Table: case name, docket no., court, date, holding"</span>,\n<span class="code-key">"sources_policy"</span>: <span class="code-str">"Only Westlaw or official court databases"</span>,\n<span class="code-key">"time_constraints"</span>: <span class="code-str">"2010 to 2024 only"</span>,\n<span class="code-key">"ambiguity_control"</span>: <span class="code-str">"If no real case found → 'no case found' – do not invent"</span>`;
+  el.innerHTML = lang === 'ar' ? ar : en;
+}
+
+// ─── CHECKLIST ───
+function renderChecklist() {
+  const list = currentLang === 'ar' ? checklistAr : checklistEn;
+  const grid = document.getElementById('checklistGrid');
+  if (!grid) return;
+  grid.innerHTML = list.map((text, i) => `
+    <div class="check-item${checkedItems[i] ? ' checked' : ''}" onclick="toggleCheck(${i})">
+      <div class="check-box">${checkedItems[i] ? '✓' : ''}</div>
+      <div class="check-text">${text}</div>
+    </div>
+  `).join('');
+  updateProgress();
+}
+
+function toggleCheck(i) {
+  checkedItems[i] = !checkedItems[i];
+  renderChecklist();
+}
+
+function updateProgress() {
+  const done = checkedItems.filter(Boolean).length;
+  const total = checkedItems.length;
+  const pct = Math.round((done / total) * 100);
+  const bar = document.getElementById('progressBar');
+  const label = document.getElementById('progressLabel');
+  if (bar) bar.style.width = pct + '%';
+  if (label) label.textContent = done + ' / ' + total;
+}
+
+// ─── FAQ ───
+function renderFAQ() {
+  const faq = currentLang === 'ar' ? faqAr : faqEn;
+  const list = document.getElementById('faqList');
+  if (!list) return;
+  list.innerHTML = faq.map((item, i) => `
+    <div class="faq-item" id="faq-${i}">
+      <div class="faq-q" onclick="toggleFAQ(${i})">
+        <span>${item.q}</span>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a"><div class="faq-a-inner">${item.a}</div></div>
+    </div>
+  `).join('');
+}
+
+function toggleFAQ(i) {
+  const item = document.getElementById('faq-' + i);
+  if (!item) return;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ─── SCROLL REVEAL ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+  });
+}, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ─── DOWNLOAD ───
+function handleDownload() {
+  const email = document.getElementById('emailInput').value.trim();
+  const btn = document.querySelector('.cta-section .btn-primary');
+  if (!email || !email.includes('@')) {
+    document.getElementById('emailInput').style.borderColor = '#F87171';
+    setTimeout(() => document.getElementById('emailInput').style.borderColor = '', 2000);
+    return;
+  }
+  btn.textContent = currentLang === 'ar' ? '✓ تم الإرسال!' : '✓ Sent!';
+  btn.style.background = '#1D6A46';
+  setTimeout(() => {
+    btn.textContent = currentLang === 'ar' ? '⬇ تحميل الدليل' : '⬇ Download Guide';
+    btn.style.background = '';
+  }, 3000);
+}
+
+// ─── INIT ───
+init();
+setLanguage('ar');
+</script>
+</body>
+</html>
